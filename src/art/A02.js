@@ -10,8 +10,8 @@ const A02 = () => {
   const wordIndexRef = useRef(0);
   const frameCountRef = useRef(0);
 
-  // Move the declaration of t outside of the drawPlasma function
-  let t = 0;
+  // Create a ref for the time variable
+  const timeRef = useRef(0);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -28,14 +28,14 @@ const A02 = () => {
 
       for (let x = 0; x < canvas.width; x++) {
         for (let y = 0; y < canvas.height; y++) {
-          const value = noise3D(x / 16, y / 16, t / 32) * 0.5 + 0.5;
+          const value = noise3D(x / 16, y / 16, timeRef.current / 32) * 0.5 + 0.5;
           data[(x + y * canvas.width) * 4 + 0] = value * 255;
           data[(x + y * canvas.width) * 4 + 1] = value * 255;
           data[(x + y * canvas.width) * 4 + 2] = value * 255;
           data[(x + y * canvas.width) * 4 + 3] = 255;
         }
       }
-      t++;
+      timeRef.current++;
       ctx.putImageData(imageData, 0, 0);
 
       // Draw text over the noise
