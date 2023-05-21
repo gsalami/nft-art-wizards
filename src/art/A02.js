@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { createNoise3D } from 'simplex-noise';
-//change 
+
 const A02 = () => {
   const canvasRef = useRef(null);
   const noise3D = createNoise3D(Math.random);
   let t = 0;
 
-  // Words to loop through and current word/letter indices
-  const words = ['Wizards', 'of Wisdom', 'get ready', 'to mint'];
-  let wordIndex = 0;
-  let letterIndex = 0;
+  // Create refs for letterIndex and wordIndex
+  const letterIndexRef = useRef(0);
+  const wordIndexRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -17,36 +16,25 @@ const A02 = () => {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
+    const words = ['Hello', 'world', 'React', 'JavaScript', 'Coding'];
+    let word = words[wordIndexRef.current];
+    let text = '';
+
     const drawPlasma = () => {
-      for (let x = 0; x < canvas.width; x++) {
-        for (let y = 0; y < canvas.height; y++) {
-          const value = noise3D(x / 16, y / 16, t / 32) * 0.5 + 0.5;
-          data[(x + y * canvas.width) * 4 + 0] = value * 255;
-          data[(x + y * canvas.width) * 4 + 1] = value * 255;
-          data[(x + y * canvas.width) * 4 + 2] = value * 255;
-          data[(x + y * canvas.width) * 4 + 3] = 255;
-        }
-      }
-      t++;
-      ctx.putImageData(imageData, 0, 0);
+      // ... rest of your code ...
 
-      // Draw text over the noise
-      ctx.font = '120px Arial Black';
-      ctx.fillStyle = 'white';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      const text = words[wordIndex].substring(0, letterIndex);
-      ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-
-      // Update letter index or switch to next word
-      if (letterIndex < words[wordIndex].length) {
-        letterIndex++;
+      // Use .current property to access and modify the values
+      if (letterIndexRef.current < word.length) {
+        text += word[letterIndexRef.current];
+        letterIndexRef.current++;
       } else {
-        letterIndex = 0;
-        wordIndex = (wordIndex + 1) % words.length;
+        text = '';
+        letterIndexRef.current = 0;
+        wordIndexRef.current = (wordIndexRef.current + 1) % words.length;
+        word = words[wordIndexRef.current];
       }
 
-      setTimeout(() => requestAnimationFrame(drawPlasma), 500); // Add delay here
+      // ... rest of your code ...
     };
 
     drawPlasma();
