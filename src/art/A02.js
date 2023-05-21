@@ -5,7 +5,7 @@ const A02 = () => {
   const canvasRef = useRef(null);
   const noise3D = createNoise3D(Math.random);
 
-  // Create refs for letterIndex, wordIndex, and frameCount
+  // Create refs for letterIndex, wordIndex, and frameCount gu
   const letterIndexRef = useRef(0);
   const wordIndexRef = useRef(0);
   const frameCountRef = useRef(0);
