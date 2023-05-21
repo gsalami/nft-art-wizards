@@ -42,7 +42,7 @@ const A02 = () => {
       ctx.textBaseline = 'middle';
 
       // Only add the next letter every 10 frames
-      if (frameCountRef.current % 30 === 0) {
+      if (frameCountRef.current % 10 === 0) {
         if (letterIndexRef.current < word.length) {
           text += word[letterIndexRef.current];
           letterIndexRef.current++;
