@@ -5,15 +5,16 @@ const A02 = () => {
   const canvasRef = useRef(null);
   const noise3D = createNoise3D(Math.random);
 
-  // Create refs for letterIndex and wordIndex
+  // Create refs for letterIndex, wordIndex, and frameCount
   const letterIndexRef = useRef(0);
   const wordIndexRef = useRef(0);
+  const frameCountRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    const words = ['Hello', 'world', 'React', 'JavaScript', 'Coding'];
+    const words = ['Wizards', 'of', 'Wisdom', 'spells', 'of wisdom'];
     let word = words[wordIndexRef.current];
     let text = '';
 
@@ -35,24 +36,27 @@ const A02 = () => {
       ctx.putImageData(imageData, 0, 0);
 
       // Draw text over the noise
-      ctx.font = '50px Arial Black';
+      ctx.font = '120px Arial Black';
       ctx.fillStyle = 'white';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
 
-      // Use .current property to access and modify the values
-      if (letterIndexRef.current < word.length) {
-        text += word[letterIndexRef.current];
-        letterIndexRef.current++;
-      } else {
-        text = '';
-        letterIndexRef.current = 0;
-        wordIndexRef.current = (wordIndexRef.current + 1) % words.length;
-        word = words[wordIndexRef.current];
+      // Only add the next letter every 10 frames
+      if (frameCountRef.current % 30 === 0) {
+        if (letterIndexRef.current < word.length) {
+          text += word[letterIndexRef.current];
+          letterIndexRef.current++;
+        } else {
+          text = '';
+          letterIndexRef.current = 0;
+          wordIndexRef.current = (wordIndexRef.current + 1) % words.length;
+          word = words[wordIndexRef.current];
+        }
       }
 
       ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
+      frameCountRef.current++;
       requestAnimationFrame(drawPlasma);
     };
 
