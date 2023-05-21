@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { createNoise3D } from 'simplex-noise';
-
+//change 
 const A02 = () => {
   const canvasRef = useRef(null);
   const noise3D = createNoise3D(Math.random);
