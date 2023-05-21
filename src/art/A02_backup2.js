@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { createNoise3D } from 'simplex-noise';
-import { useParams } from 'react-router-dom';
 
 const A02 = () => {
   const canvasRef = useRef(null);
@@ -14,16 +13,12 @@ const A02 = () => {
   // Create a ref for the time variable
   const timeRef = useRef(0);
 
-  // Get the text parameter from the URL
-  const { text } = useParams();
-
-  // Split the text into words
-  const words = text.split(' ');
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
+    const words = ['Wizards', 'of', 'Wisdom', 'spells', 'of wisdom'];
     let word = words[wordIndexRef.current];
     let text = '';
 
@@ -69,7 +64,7 @@ const A02 = () => {
     };
 
     drawPlasma();
-  }, [noise3D, words]);
+  }, [noise3D]);
 
   return <canvas ref={canvasRef} width={800} height={800} />;
 };
