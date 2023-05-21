@@ -13,6 +13,7 @@ const A02 = () => {
   // Move the declaration of t outside of the drawPlasma function
   let t = 0;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
